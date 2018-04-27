@@ -1,6 +1,5 @@
 class Runner < ApplicationRecord
   belongs_to :area
-  has_many :memberships, dependent: :destroy
   # belongs_to :user, through: :areas
 
   validates :first_name, presence: true

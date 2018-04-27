@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180427120105) do
+ActiveRecord::Schema.define(version: 20180427184113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,15 +19,6 @@ ActiveRecord::Schema.define(version: 20180427120105) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "memberships", force: :cascade do |t|
-    t.bigint "preference_id"
-    t.bigint "runner_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["preference_id"], name: "index_memberships_on_preference_id"
-    t.index ["runner_id"], name: "index_memberships_on_runner_id"
   end
 
   create_table "personalised_emails", force: :cascade do |t|
@@ -43,12 +34,6 @@ ActiveRecord::Schema.define(version: 20180427120105) do
     t.index ["user_id"], name: "index_personalised_emails_on_user_id"
   end
 
-  create_table "preferences", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "runners", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -57,6 +42,9 @@ ActiveRecord::Schema.define(version: 20180427120105) do
     t.bigint "area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "group_run", default: true
+    t.boolean "mission", default: false
+    t.boolean "coach_run", default: false
     t.index ["area_id"], name: "index_runners_on_area_id"
   end
 
@@ -81,8 +69,6 @@ ActiveRecord::Schema.define(version: 20180427120105) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "memberships", "preferences"
-  add_foreign_key "memberships", "runners"
   add_foreign_key "personalised_emails", "users"
   add_foreign_key "runners", "areas"
 end
