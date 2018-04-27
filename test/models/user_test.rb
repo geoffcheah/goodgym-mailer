@@ -19,9 +19,4 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil user.errors[:area], "no validation error for area present"
     assert_not user.area, "User needs to belong to an area"
   end
-
-  test "should not save area without a name" do
-    area = Area.new
-    assert_not area.save, "An area cannot be created and saved without a name"
-  end
 end
