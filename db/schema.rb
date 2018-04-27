@@ -10,10 +10,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180427111748) do
+ActiveRecord::Schema.define(version: 20180427120105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "areas", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "preference_id"
+    t.bigint "runner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["preference_id"], name: "index_memberships_on_preference_id"
+    t.index ["runner_id"], name: "index_memberships_on_runner_id"
+  end
+
+  create_table "personalised_emails", force: :cascade do |t|
+    t.string "subject"
+    t.text "content"
+    t.string "status"
+    t.boolean "group_run"
+    t.boolean "mission"
+    t.boolean "coach_run"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_personalised_emails_on_user_id"
+  end
+
+  create_table "preferences", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "runners", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "status"
+    t.string "email"
+    t.bigint "area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["area_id"], name: "index_runners_on_area_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -28,8 +73,16 @@ ActiveRecord::Schema.define(version: 20180427111748) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.bigint "area_id"
+    t.index ["area_id"], name: "index_users_on_area_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "memberships", "preferences"
+  add_foreign_key "memberships", "runners"
+  add_foreign_key "personalised_emails", "users"
+  add_foreign_key "runners", "areas"
 end
