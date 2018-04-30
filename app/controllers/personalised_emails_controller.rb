@@ -1,4 +1,5 @@
 class PersonalisedEmailsController < ApplicationController
+
   def new
     @personalised_email = PersonalisedEmail.new
   end
