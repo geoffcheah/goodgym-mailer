@@ -11,7 +11,7 @@ class PersonalisedEmailsController < ApplicationController
     if @personalised_email.save!
       target_status = @personalised_email.status
       @runners = filter_runners_for_status(@runners, target_status)
-      @runners = filter_runners_for_preference(@runners, @personalised_email)
+      @runners = filter_runners_for_preference(@runners, @personalised_email) if did_trainer_specify_preference?(@personalised_email)
       @runners.each do |runner|
         UserMailer.contact(@personalised_email, runner).deliver_now
       end
@@ -46,10 +46,59 @@ class PersonalisedEmailsController < ApplicationController
   end
 
   def filter_runners_for_preference(runners, personalised_email)
-    runners.delete_if { |runner| !runner.group_run } if contact_group_runners?(personalised_email)
-    runners.delete_if { |runner| !runner.mission } if contact_mission_runners?(personalised_email)
-    runners.delete_if { |runner| !runner.coach_run } if contact_coach_runners?(personalised_email)
+    if contact_group_runners?(personalised_email) && contact_mission_runners?(personalised_email) && contact_coach_runners?(personalised_email)
+      runners
+    elsif contact_group_runners?(personalised_email) && contact_mission_runners?(personalised_email)
+      runners.delete_if { |runner| !runner.group_run && !runner.mission }
+      # filter_group_runners(runners)
+      # filter_mission_runners(runners)
+    elsif contact_group_runners?(personalised_email) && contact_coach_runners?(personalised_email)
+      runners.delete_if { |runner| !runner.group_run && !runner.coach_run }
+      # filter_group_runners(runners)
+      # filter_coach_runners(runners)
+    elsif contact_mission_runners?(personalised_email) && contact_coach_runners?(personalised_email)
+      runners.delete_if { |runner| !runner.mission && !runner.coach_run }
+      # filter_mission_runners(runners)
+      # filter_coach_runners(runners)
+    elsif contact_group_runners?(personalised_email)
+      runners.delete_if { |runner| !runner.group_run}
+      # filter_group_runners(runners)
+    elsif contact_mission_runners?(personalised_email)
+      runners.delete_if { |runner| !runner.mission }
+      # filter_mission_runners(runners)
+    else contact_coach_runners?(personalised_email)
+      runners.delete_if { |runner| !runner.coach_run }
+      # filter_coach_runners(runners)
+    end
+
+    # runners.delete_if { |runner| !runner.group_run } if contact_group_runners?(personalised_email)
+    # runners.delete_if { |runner| !runner.mission } if contact_mission_runners?(personalised_email)
+    # runners.delete_if { |runner| !runner.coach_run } if contact_coach_runners?(personalised_email)
   end
+
+  def did_trainer_specify_preference?(personalised_email)
+    return true if personalised_email.group_run || personalised_email.mission || personalised_email.coach_run
+  end
+
+  # def filter_group_runners(runners)
+  #   runners.each do |runner|
+  #     final_runners << runner if runner.group_run
+  #   end
+  # end
+
+  # def filter_mission_runners(runners)
+  #   runners.each do |runner|
+  #     final_runners << runner if runner.mission
+  #   end
+  # end
+
+  # def filter_coach_runners(runners)
+  #   runners.each do |runner|
+  #     final_runners << runner if runner.coach_run
+  #   end
+  # end
+
+
 end
 
 # go through each runner
