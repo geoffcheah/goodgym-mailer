@@ -2,6 +2,7 @@ puts "starting seed"
 
 puts "destroying previous seeds"
 Runner.destroy_all
+PersonalisedEmail.destroy_all
 User.destroy_all
 Area.destroy_all
 
@@ -13,7 +14,7 @@ user = User.create!(first_name: "Axel", last_name: "Manzano", email: "am@gmail.c
 
 puts "creating runners"
 john = Runner.create!(email: "jd@gmail.com", first_name: "John", last_name: "Doe", status: "never_run", area: westminster, group_run: true, mission: false, coach_run: true)
-henry = Runner.create!(email: "hc@gmail.com", first_name: "Henry", last_name: "Cavill", status: "lapsed", area: westminster, group_run: true, mission: false, coach_run: false)
+henry = Runner.create!(email: "hc@gmail.com", first_name: "Henry", last_name: "Cavill", status: "lapsed", area: westminster, group_run: false, mission: true, coach_run: true)
 arnold = Runner.create!(email: "as@gmail.com", first_name: "Arnold", last_name: "Schwarzenegger", status: "regular", area: westminster, group_run: true, mission: true, coach_run: false)
 ellen = Runner.create!(email: "ed@gmail.com", first_name: "Ellen", last_name: "Degenneres", status: "never_run", area: westminster, group_run: false, mission: true, coach_run: false)
 theresa = Runner.create!(email: "tm@gmail.com", first_name: "Theresa", last_name: "May", status: "lapsed", area: westminster, group_run: false, mission: true, coach_run: true)

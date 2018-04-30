@@ -37,13 +37,9 @@ class UserMailer < ApplicationMailer
   end
 
   def filter_runners_for_preference(runners, personalised_email)
-    if contact_group_runners?(personalised_email)
-      runners.delete_if { |runner| !runner.group_run }
-    elsif contact_mission_runners?(personalised_email)
-      runners.delete_if { |runner| !runner.mission }
-    else contact_coach_runners?(personalised_email)
-      runners.delete_if { |runner| !runner.coach_run }
-    end
+    runners.delete_if { |runner| !runner.group_run } if contact_group_runners?(personalised_email)
+    runners.delete_if { |runner| !runner.mission } if contact_mission_runners?(personalised_email)
+    runners.delete_if { |runner| !runner.coach_run } if contact_coach_runners?(personalised_email)
   end
 end
 
