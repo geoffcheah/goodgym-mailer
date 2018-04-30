@@ -7,9 +7,11 @@ class PersonalisedEmailsController < ApplicationController
   def create
     @runners = Runner.all
     @personalised_email = PersonalisedEmail.new(email_params)
+    @personalised_email.user = current_user
     if @personalised_email.save!
       UserMailer.contact(@personalised_email, @runners).deliver_now
       flash[:notice] = "Email sent!"
+      redirect_to root_path
     else
       flash[:errors] = @personalised_email.errors.full_messages
       render 'new'

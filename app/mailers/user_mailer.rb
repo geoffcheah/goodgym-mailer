@@ -9,7 +9,7 @@ class UserMailer < ApplicationMailer
     @personalised_email = personalised_email
     @runners = runners
     target_status = @personalised_email.status
-    @runners = filter_runners_for_status(@runners)
+    @runners = filter_runners_for_status(@runners, target_status)
     @runners = filter_runners_for_preference(@runners, @personalised_email)
 
     @runners.each do |runner|
@@ -25,14 +25,14 @@ class UserMailer < ApplicationMailer
   end
 
   def contact_mission_runners?(personalised_email)
-    personalised_email.mission_runners
+    personalised_email.mission
   end
 
   def contact_coach_runners?(personalised_email)
     personalised_email.coach_run
   end
 
-  def filter_runners_for_status(runners)
+  def filter_runners_for_status(runners, target_status)
     runners.select { |runner| runner.status == target_status}
   end
 
