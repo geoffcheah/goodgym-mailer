@@ -6,6 +6,5 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.contact(personalised_email, runners)
   end
 
-  UserMailer.contact(@personalised_email, @runners)
-
 end
+  UserMailer.contact(PersonalisedEmail.first, @runners)

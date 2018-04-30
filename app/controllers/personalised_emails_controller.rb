@@ -7,8 +7,10 @@ class PersonalisedEmailsController < ApplicationController
     @runners = Runner.all
     @personalised_email = PersonalisedEmail.new(email_params)
     if @personalised_email.save!
-      UserMailer.contact(@personalised_email, @runners)
+      UserMailer.contact(@personalised_email, @runners).deliver_now
+      flash[:notice] = "Email sent!"
     else
+      flash[:errors] = @personalised_email.errors.full_messages
       render 'new'
     end
   end
