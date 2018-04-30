@@ -1,3 +1,7 @@
-User#contact
+<%= Hi @runner.first_name %>
 
-<%= @greeting %>, find me in app/views/user_mailer/contact.text.erb
+<%= @personalised_email.content %>
+
+Cheers!
+
+<%= @personalised_email.user.first_name %>

@@ -1,5 +1,7 @@
-<h1>User#contact</h1>
 
-<p>
-  <%= @greeting %>, find me in app/views/user_mailer/contact.html.erb
-</p>
+<p><%= Hi @runner.first_name %></p>
+
+<p><%= @personalised_email.content %></p>
+
+<p>Cheers!</p>
+<p><%= @personalised_email.user.first_name %></p>

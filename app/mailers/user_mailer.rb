@@ -6,14 +6,15 @@ class UserMailer < ApplicationMailer
   #   en.user_mailer.contact.subject
   #
   def contact(personalised_email, runners)
-    @runners = runners
     @personalised_email = personalised_email
-    status = @personalised_email.status
-    runners_with_target_status = filter_runners_for_status(@runners)
-    runners_to_send_to = filter_runners_for_preference(runners_with_target_status, personalised_email)
+    @runners = runners
+    target_status = @personalised_email.status
+    @runners = filter_runners_for_status(@runners)
+    @runners = filter_runners_for_preference(@runners, @personalised_email)
 
-    runners_to_send_to.each do |runner|
-      mail(to: "#{runner.emal}" , subject: "#{personalised_email.subject}"
+    @runners.each do |runner|
+      @runner = runner
+      mail(to: @runner.email , subject: "#{@personalised_email.subject}")
     end
   end
 
@@ -32,7 +33,7 @@ class UserMailer < ApplicationMailer
   end
 
   def filter_runners_for_status(runners)
-    runners.select { |runner| runner.status == status}
+    runners.select { |runner| runner.status == target_status}
   end
 
   def filter_runners_for_preference(runners, personalised_email)
@@ -49,4 +50,5 @@ end
 # go through each runner
 # find runners where status matches
 # put runners in separate array to iterate over
-# find each runner who has given preference through looking at their memberships
+# find each runner who has given preference through looking at their boolean attributes,
+# altering runners array which is returned to runners_to_send_to

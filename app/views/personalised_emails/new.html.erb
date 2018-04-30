@@ -1,0 +1,17 @@
+
+<div class="row">
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+    <div class="new-email-form">
+      <%= simple_form_for @personalised_email, remote: true do |f| %>
+        <%= f.input :status, label: "Status of runners you want to target", collection: ["never_run", "regular", "lapsed"], class: "form-control" %>
+        <%= f.label "Check the preference groups to target:" %>
+        <%= f.input :group_run, class: "form-control" %>
+        <%= f.input :mission, class: "form-control" %>
+        <%= f.input :coach_run, class: "form-control" %>
+        <%= f.input :subject, class: "form-control" %>
+        <%= f.input :content, class: "form-control" %>
+        <%= f.button :submit, "Send!", class: "btn btn-success" %>
+      <%  end %>
+    </div>
+  </div>
+</div>
