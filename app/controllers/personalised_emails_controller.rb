@@ -7,7 +7,7 @@ class PersonalisedEmailsController < ApplicationController
     @runners = Runner.all
     @personalised_email = PersonalisedEmail.new(email_params)
     @personalised_email.user = current_user
-    if @personalised_email.save!
+    if @personalised_email.save
       target_status = @personalised_email.status
       @runners = filter_runners_for_status(@runners, target_status)
       @runners = filter_runners_for_preference(@runners, @personalised_email) if did_trainer_specify_preference?(@personalised_email)
