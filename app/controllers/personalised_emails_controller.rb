@@ -15,7 +15,7 @@ class PersonalisedEmailsController < ApplicationController
         UserMailer.contact(@personalised_email, runner).deliver_now
       end
       flash[:notice] = "Email sent!"
-      redirect_to(root_path)
+      redirect_to(dashboard_path)
     else
       flash[:alert] = @personalised_email.errors.full_messages
       render 'new'
