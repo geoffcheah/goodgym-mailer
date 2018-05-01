@@ -2,8 +2,12 @@
   <h1 class="dashboard-header"><%= @user.first_name %>'s Dashboard</h1>
   <h3 class="dashboard-header">Emails Sent: <%= @personalised_emails.count %></h3>
   <div class="emails-container">
-    <% if @personalised_emails %>
-      <% @personalised_emails.reverse.each do |email| %>
+    <% if @personalised_emails.empty? %>
+       <div class="email-container">
+        <h5 class="dashboard-header">No emails sent yet</h5>
+      </div>
+    <% else %>
+     <% @personalised_emails.reverse.each do |email| %>
         <div class="email-container">
           <p><strong>Time Sent:</strong> <%= email.created_at %></p>
           <div class="preferences-container">
@@ -30,8 +34,6 @@
           <p><%= email.content %></p>
         </div>
       <% end %>
-    <% else %>
-      <h5 class="dashboard-header">No emails sent yet</h5>
     <% end %>
   </div>
 </div>
