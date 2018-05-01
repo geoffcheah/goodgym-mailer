@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="dashboard-header">Dashboard</h1>
+  <h1 class="dashboard-header"><%= @user.first_name %>'s Dashboard</h1>
   <h3 class="dashboard-header">Emails Sent: <%= @personalised_emails.count %></h3>
   <div class="emails-container">
     <% if @personalised_emails %>
@@ -7,6 +7,7 @@
         <div class="email-container">
           <p><strong>Time Sent:</strong> <%= email.created_at %></p>
           <div class="preferences-container">
+            <h5>Preference Groups Targeted:</h5>
             <% if email.group_run %>
                 <span class="btn btn-success preferences">Group Runners</span>
               <% else %>
