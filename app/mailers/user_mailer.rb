@@ -1,10 +1,5 @@
 class UserMailer < ApplicationMailer
-
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.user_mailer.contact.subject
-  #
+  # Mailer action that is called everytime a new instance of personalised_email is created by user
   def contact(personalised_email, runner)
     @personalised_email = personalised_email
     @runner = runner
