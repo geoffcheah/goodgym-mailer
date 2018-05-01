@@ -1,5 +1,4 @@
 class PersonalisedEmailsController < ApplicationController
-
   def new
     @personalised_email = PersonalisedEmail.new
   end
@@ -25,26 +24,32 @@ class PersonalisedEmailsController < ApplicationController
 
   private
 
+  # strong params
   def email_params
     params.require(:personalised_email).permit(:subject, :content, :status, :group_run, :mission, :coach_run, :user_id)
   end
 
-   def contact_group_runners?(personalised_email)
+  # takes in personalised_email object the user (trainer) created. Method to verify whether user has targeted group runners (group_run boolean attribute)
+  def contact_group_runners?(personalised_email)
     personalised_email.group_run
   end
 
+  # Method to verify whether user (trainer) has targeted mission runners
   def contact_mission_runners?(personalised_email)
     personalised_email.mission
   end
 
+  # Method to verify whether user (trainer) has targeted coach runners
   def contact_coach_runners?(personalised_email)
     personalised_email.coach_run
   end
 
+  # Method to match the runners in area with the targetted status selected by user (trainer) for email contact
   def filter_runners_for_status(runners, target_status)
     runners.select { |runner| runner.status == target_status}
   end
 
+  # Method to filter the selected runners with matching status down to select runners with users targeted preference
   def filter_runners_for_preference(runners, personalised_email)
     if contact_group_runners?(personalised_email) && contact_mission_runners?(personalised_email) && contact_coach_runners?(personalised_email)
       runners
@@ -63,6 +68,7 @@ class PersonalisedEmailsController < ApplicationController
     end
   end
 
+  # Method to determine whether user (trainer) wanted to target by preference. Logic for which @runners to send to when they do and do not
   def did_trainer_specify_preference?(personalised_email)
     return true if personalised_email.group_run || personalised_email.mission || personalised_email.coach_run
   end
@@ -70,6 +76,5 @@ end
 
 # go through each runner
 # find runners where status matches
-# put runners in separate array to iterate over
 # find each runner who has given preference through looking at their boolean attributes,
-# use completely filtered runners array to send bulk emails
+# use completely filtered @runners array to send bulk emails
