@@ -10,7 +10,7 @@ puts "creating area"
 westminster = Area.create!(name: "Westminster")
 
 puts "creating user (trainer)"
-user = User.create!(first_name: "Axel", last_name: "Manzano", email: "am@gmail.com", password: "123456", area: westminster)
+user = User.create!(first_name: "Axel", last_name: "Manzano", email: "axel@goodgym.org", password: "123456", area: westminster)
 
 puts "creating runners"
 john = Runner.create!(email: "jd@gmail.com", first_name: "John", last_name: "Doe", status: "never_run", area: westminster, group_run: true, mission: false, coach_run: true)
