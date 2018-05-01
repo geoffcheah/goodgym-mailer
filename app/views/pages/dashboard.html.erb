@@ -1,0 +1,36 @@
+<div class="container">
+  <h1 class="dashboard-header">Dashboard</h1>
+  <h3 class="dashboard-header">Emails Sent: <%= @personalised_emails.count %></h3>
+  <div class="emails-container">
+    <% if @personalised_emails %>
+      <% @personalised_emails.reverse.each do |email| %>
+        <div class="email-container">
+          <p><strong>Time Sent:</strong> <%= email.created_at %></p>
+          <div class="preferences-container">
+            <% if email.group_run %>
+                <span class="btn btn-success preferences">Group Runners</span>
+              <% else %>
+                <span class="btn btn-danger preferences">Group Runners</span>
+              <% end %>
+              <% if email.mission %>
+                <span class="btn btn-success preferences">Mission Runners</span>
+              <% else %>
+                <span class="btn btn-danger preferences">Mission Runners</span>
+              <% end %>
+              <% if email.coach_run %>
+                <span class="btn btn-success preferences">Coach Runners</span>
+              <% else %>
+                <span class="btn btn-danger preferences">Coach Runners</span>
+              <% end %>
+          </div>
+          <p><strong>Target Runner Status:</strong> <%= email.status %></p>
+          <p><strong>Subject:</strong> <%= email.subject %></p>
+          <p><strong>Message Content:</strong></p>
+          <p><%= email.content %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <h5 class="dashboard-header">No emails sent yet</h5>
+    <% end %>
+  </div>
+</div>

@@ -3,4 +3,8 @@ class PagesController < ApplicationController
 
   def home
   end
+
+  def dashboard
+    @personalised_emails = PersonalisedEmail.all
+  end
 end

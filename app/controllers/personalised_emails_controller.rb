@@ -14,7 +14,7 @@ class PersonalisedEmailsController < ApplicationController
       @runners.each do |runner|
         UserMailer.contact(@personalised_email, runner).deliver_now
       end
-      flash[:alert] = "Email sent!"
+      flash[:notice] = "Email sent!"
       redirect_to(root_path)
     else
       flash[:alert] = @personalised_email.errors.full_messages

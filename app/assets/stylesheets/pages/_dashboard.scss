@@ -1,0 +1,27 @@
+.flexbox-container {
+  padding: 20px;
+  margin: 20px;
+  display: flex;
+}
+
+.email-container {
+  border-bottom: 1px solid;
+  padding: 10px;
+}
+
+.emails-container {
+  // margin-left: 20px;
+  margin: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.preferences {
+  margin: 10px;
+}
+
+.dashboard-header {
+  padding-left: 20px;
+  margin-left: 20px;
+}
